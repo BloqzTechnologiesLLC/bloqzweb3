@@ -6,6 +6,10 @@ import {
   insuranceClaims, 
   aiInteractions, 
   blockchainTransactions,
+  auditLogs,
+  dataAccessLogs,
+  securityIncidents,
+  complianceReports,
   type User, 
   type InsertUser, 
   type Prescription, 
@@ -19,7 +23,15 @@ import {
   type AiInteraction,
   type InsertAiInteraction,
   type BlockchainTransaction,
-  type InsertBlockchainTransaction
+  type InsertBlockchainTransaction,
+  type AuditLog,
+  type InsertAuditLog,
+  type DataAccessLog,
+  type InsertDataAccessLog,
+  type SecurityIncident,
+  type InsertSecurityIncident,
+  type ComplianceReport,
+  type InsertComplianceReport
 } from "@shared/schema";
 
 import { DbStorage } from "./db-storage";

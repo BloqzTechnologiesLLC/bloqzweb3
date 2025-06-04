@@ -233,62 +233,40 @@ export const blockchainAnalytics = pgTable("blockchain_analytics", {
 export const auditLogs = pgTable("audit_logs", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull(),
-  action: varchar("action", { length: 100 }).notNull(),
-  resourceType: varchar("resource_type", { length: 50 }).notNull(),
-  resourceId: varchar("resource_id", { length: 100 }),
-  ipAddress: varchar("ip_address", { length: 45 }).notNull(),
-  userAgent: text("user_agent"),
+  action: text("action").notNull(),
   details: jsonb("details"),
-  riskLevel: varchar("risk_level", { length: 20 }).notNull().default("low"),
-  complianceStatus: varchar("compliance_status", { length: 20 }).notNull().default("compliant"),
-  timestamp: timestamp("timestamp").defaultNow().notNull(),
+  timestamp: timestamp("timestamp").defaultNow(),
 });
 
+// Data Access Logs
 export const dataAccessLogs = pgTable("data_access_logs", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull(),
-  patientId: integer("patient_id"),
-  dataType: varchar("data_type", { length: 50 }).notNull(),
-  accessType: varchar("access_type", { length: 20 }).notNull(), // read, write, delete, export
-  purpose: varchar("purpose", { length: 100 }).notNull(),
-  location: varchar("location", { length: 100 }),
-  deviceInfo: jsonb("device_info"),
-  dataClassification: varchar("data_classification", { length: 20 }).notNull().default("phi"), // phi, pii, public
-  consentStatus: varchar("consent_status", { length: 20 }).notNull().default("required"),
-  retentionDate: timestamp("retention_date"),
-  timestamp: timestamp("timestamp").defaultNow().notNull(),
+  resourceType: text("resource_type").notNull(),
+  resourceId: integer("resource_id").notNull(),
+  accessType: text("access_type").notNull(),
+  timestamp: timestamp("timestamp").defaultNow(),
 });
 
+// Security Incidents
 export const securityIncidents = pgTable("security_incidents", {
   id: serial("id").primaryKey(),
-  incidentType: varchar("incident_type", { length: 50 }).notNull(),
-  severity: varchar("severity", { length: 20 }).notNull(), // low, medium, high, critical
-  description: text("description").notNull(),
-  affectedUsers: jsonb("affected_users"),
-  affectedData: jsonb("affected_data"),
-  detectionMethod: varchar("detection_method", { length: 50 }).notNull(),
-  status: varchar("status", { length: 20 }).notNull().default("open"), // open, investigating, resolved, closed
-  assignedTo: integer("assigned_to"),
-  responseActions: jsonb("response_actions"),
-  resolutionNotes: text("resolution_notes"),
-  reportedAt: timestamp("reported_at").defaultNow().notNull(),
+  severity: text("severity").notNull(),
+  type: text("type").notNull(),
+  details: jsonb("details"),
+  status: text("status").notNull(),
+  timestamp: timestamp("timestamp").defaultNow(),
   resolvedAt: timestamp("resolved_at"),
 });
 
+// Compliance Reports
 export const complianceReports = pgTable("compliance_reports", {
   id: serial("id").primaryKey(),
-  reportType: varchar("report_type", { length: 50 }).notNull(), // hipaa, gdpr, audit, breach
-  period: varchar("period", { length: 20 }).notNull(), // daily, weekly, monthly, quarterly
-  generatedBy: integer("generated_by").notNull(),
-  status: varchar("status", { length: 20 }).notNull().default("generated"),
-  findings: jsonb("findings").notNull(),
-  recommendations: jsonb("recommendations"),
-  riskScore: integer("risk_score").notNull().default(0),
-  complianceScore: integer("compliance_score").notNull().default(100),
-  filePath: varchar("file_path", { length: 255 }),
-  generatedAt: timestamp("generated_at").defaultNow().notNull(),
-  reviewedAt: timestamp("reviewed_at"),
-  reviewedBy: integer("reviewed_by"),
+  type: text("type").notNull(),
+  details: jsonb("details"),
+  status: text("status").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at"),
 });
 
 // Insert schemas

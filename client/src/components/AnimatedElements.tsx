@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ButtonHTMLAttributes, type HTMLAttributes } from "react";
 import { useIndustryTheme } from "@/contexts/ThemeContext";
 
 interface AnimatedCardProps {
@@ -28,9 +28,7 @@ export function AnimatedCard({ children, className = "", hoverScale = 1.02, dela
   );
 }
 
-interface AnimatedButtonProps {
-  children: React.ReactNode;
-  className?: string;
+interface AnimatedButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline";
   size?: "sm" | "md" | "lg";
   loading?: boolean;
@@ -99,11 +97,10 @@ export function AnimatedButton({
   );
 }
 
-interface AnimatedIconProps {
-  children: React.ReactNode;
-  className?: string;
-  hoverRotate?: number;
+interface AnimatedIconProps extends HTMLAttributes<HTMLDivElement> {
   hoverScale?: number;
+  hoverRotate?: number;
+  children?: React.ReactNode;
 }
 
 export function AnimatedIcon({ 

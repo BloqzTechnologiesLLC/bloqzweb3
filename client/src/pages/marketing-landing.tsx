@@ -11,8 +11,11 @@ import {
   MapPin,
   Stethoscope,
   Pill,
-  Building2,
-  CreditCard,
+  Build                    width="100%" 
+                    height="1100" 
+                    src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAY_C049UNDEzNTJRSzI3RUxBOVNRRFEySVE4Mzg3WC4u&embed=true" 
+                    frameBorder={0} 
+                    style={{ border: 'none', maxWidth: '100%', position: 'absolute', top: 0, left: 0 }} CreditCard,
   CheckCircle,
   ArrowRight
 } from "lucide-react";
@@ -303,17 +306,17 @@ export function MarketingLanding() {
               <CardContent className="p-0">
                 <div className="rounded-lg overflow-hidden relative" style={{ height: '900px' }}>
                   <iframe 
-                    width="100%" 
-                    height="1100px" 
+                    style={{ 
+                      border: 'none', 
+                      width: '100%',
+                      height: '1100px',
+                      position: 'absolute', 
+                      top: 0, 
+                      left: 0 
+                    }}
                     src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAY_C049UNDEzNTJRSzI3RUxBOVNRRFEySVE4Mzg3WC4u&embed=true" 
-                    frameBorder="0" 
-                    marginWidth="0" 
-                    marginHeight="0" 
-                    style={{ border: 'none', maxWidth: '100%', position: 'absolute', top: 0, left: 0 }}
-                    allowFullScreen 
-                    webkitallowfullscreen="true"
-                    mozallowfullscreen="true"
-                    msallowfullscreen="true"
+                    frameBorder={0}
+                    allowFullScreen
                   />
                   {/* Overlay to hide Microsoft branding */}
                   <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white via-white dark:from-slate-900 dark:via-slate-900 to-transparent pointer-events-none z-10" />

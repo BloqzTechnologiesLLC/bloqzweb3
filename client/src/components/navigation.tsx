@@ -24,12 +24,20 @@ import {
 import { ContextualThemeSwitcher } from "./ContextualThemeSwitcher";
 import { useIndustryTheme } from "@/contexts/ThemeContext";
 import { AnimatedIcon, AnimatedButton } from "./AnimatedElements";
+import type { ButtonHTMLAttributes } from 'react';
 
 interface NavigationProps {
-  currentPage?: string;
+  currentPortal?: string;
 }
 
-export function Navigation({ currentPage }: NavigationProps) {
+interface AnimatedButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'outline' | 'solid';
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  title?: string;
+}
+
+export function Navigation({ currentPortal }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSystemsOpen, setIsSystemsOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);

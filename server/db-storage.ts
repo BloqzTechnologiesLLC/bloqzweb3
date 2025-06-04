@@ -7,6 +7,10 @@ import {
   insuranceClaims, 
   aiInteractions, 
   blockchainTransactions,
+  auditLogs,
+  dataAccessLogs,
+  securityIncidents,
+  complianceReports,
   type User, 
   type InsertUser, 
   type Prescription, 
@@ -20,7 +24,15 @@ import {
   type AiInteraction,
   type InsertAiInteraction,
   type BlockchainTransaction,
-  type InsertBlockchainTransaction
+  type InsertBlockchainTransaction,
+  type AuditLog,
+  type InsertAuditLog,
+  type DataAccessLog,
+  type InsertDataAccessLog,
+  type SecurityIncident,
+  type InsertSecurityIncident,
+  type ComplianceReport,
+  type InsertComplianceReport
 } from "@shared/schema";
 import { IStorage } from "./storage";
 import { eq, and, inArray, sql } from "drizzle-orm";
@@ -244,5 +256,63 @@ export class DbStorage implements IStorage {
       .where(eq(blockchainTransactions.id, id))
       .returning();
     return result[0];
+  }
+
+  // HIPAA Compliance
+  async createAuditLog(log: InsertAuditLog): Promise<AuditLog> {
+    const result = await db.insert(auditLogs).values(log).returning();
+    return result[0];
+  }
+
+  async getAuditLogs(userId?: number): Promise<AuditLog[]> {
+    let query = db.select().from(auditLogs);
+    if (userId) {
+      query = query.where(eq(auditLogs.userId, userId));
+    }
+    return await query.orderBy(sql`${auditLogs.timestamp} DESC`);
+  }
+
+  async createDataAccessLog(log: InsertDataAccessLog): Promise<DataAccessLog> {
+    const result = await db.insert(dataAccessLogs).values(log).returning();
+    return result[0];
+  }
+
+  async getDataAccessLogs(userId?: number): Promise<DataAccessLog[]> {
+    let query = db.select().from(dataAccessLogs);
+    if (userId) {
+      query = query.where(eq(dataAccessLogs.userId, userId));
+    }
+    return await query.orderBy(sql`${dataAccessLogs.timestamp} DESC`);
+  }
+
+  async createSecurityIncident(incident: InsertSecurityIncident): Promise<SecurityIncident> {
+    const result = await db.insert(securityIncidents).values(incident).returning();
+    return result[0];
+  }
+
+  async getSecurityIncidents(status?: string): Promise<SecurityIncident[]> {
+    let query = db.select().from(securityIncidents);
+    if (status) {
+      query = query.where(eq(securityIncidents.status, status));
+    }
+    return await query.orderBy(sql`${securityIncidents.timestamp} DESC`);
+  }
+
+  async updateSecurityIncident(id: number, updates: Partial<SecurityIncident>): Promise<SecurityIncident> {
+    const result = await db.update(securityIncidents)
+      .set(updates)
+      .where(eq(securityIncidents.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async createComplianceReport(report: InsertComplianceReport): Promise<ComplianceReport> {
+    const result = await db.insert(complianceReports).values(report).returning();
+    return result[0];
+  }
+
+  async getComplianceReports(): Promise<ComplianceReport[]> {
+    return await db.select().from(complianceReports)
+      .orderBy(sql`${complianceReports.createdAt} DESC`);
   }
 }
